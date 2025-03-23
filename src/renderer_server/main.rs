@@ -85,7 +85,7 @@ pub fn run_main(
     let mut establish_connection = Some(establish_connection);
     // Using a bounded (size = 1) channel because a oneshot consumes self when awaited and this
     // needs to be polled multiple times
-    let (mut server_shutdown, server_shutdown_receiver) = mpsc::channel(1);
+    let (server_shutdown, server_shutdown_receiver) = mpsc::channel(1);
     let mut server_shutdown_receiver = Some(server_shutdown_receiver);
 
     let window_builder = {
