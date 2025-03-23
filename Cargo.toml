@@ -10,7 +10,7 @@ keywords = ["turtle", "graphics", "drawing", "teaching", "beginner"]
 # crates.io/category_slugs
 categories = ["rendering", "rendering::graphics-api", "rendering::engine", "games", "gui"]
 license = "MPL-2.0"
-edition = "2018"
+edition = "2021"
 
 # Make sure docs are always generated with the "unstable" feature activated
 [package.metadata.docs.rs]
@@ -31,7 +31,7 @@ serde_json = "1.0"
 interpolation = "0.2"
 rand = "0.8"
 
-svg = "0.10"
+svg = "0.18"
 
 pathfinder_canvas = "0.5"
 # These versions must stay synced with the dependencies of pathfinder_canvas
