@@ -10,7 +10,7 @@ keywords = ["turtle", "graphics", "drawing", "teaching", "beginner"]
 # crates.io/category_slugs
 categories = ["rendering", "rendering::graphics-api", "rendering::engine", "games", "gui"]
 license = "MPL-2.0"
-edition = "2021"
+edition = "2024"
 
 # Make sure docs are always generated with the "unstable" feature activated
 [package.metadata.docs.rs]

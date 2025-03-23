@@ -342,7 +342,7 @@ impl AsyncTurtle {
     /// representation for this type. There is no async `Debug` trait. Please
     /// only use this method for debugging. It may be removed in a future
     /// release if we find a way to implement `Debug` trait for this type.
-    pub async fn debug(&self) -> impl Debug {
+    pub async fn debug(&self) -> impl Debug + use<> {
         self.client.debug_turtle(self.id, self.angle_unit).await
     }
 }

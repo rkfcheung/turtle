@@ -282,7 +282,7 @@ macro_rules! impl_random {
             impl Random for $typ {
                 fn random() -> Self {
                     use rand::Rng;
-                    rand::thread_rng().gen()
+                    rand::thread_rng().r#gen()
                 }
             }
 
@@ -303,7 +303,7 @@ impl_random!(f32, f64, u8, u16, u32, u64, u128, usize, i8, i16, i32, i64, i128, 
 impl Random for char {
     fn random() -> Self {
         use rand::Rng;
-        rand::thread_rng().gen()
+        rand::thread_rng().r#gen()
     }
 }
 
@@ -311,7 +311,7 @@ impl Random for char {
 impl Random for bool {
     fn random() -> Self {
         use rand::Rng;
-        rand::thread_rng().gen()
+        rand::thread_rng().r#gen()
     }
 }
 
@@ -357,7 +357,7 @@ impl_random_tuple!(A, B, C, D, E, F, G, H, I, J, K, L);
 
 macro_rules! impl_random_array {
     // Recursive, given at least one type parameter
-    {$n:expr, $t:ident, $($ts:ident,)*} => {
+    {$n:expr_2021, $t:ident, $($ts:ident,)*} => {
         impl_random_array!(($n - 1), $($ts,)*);
 
         impl<T: Random> Random for [T; $n] {
@@ -368,7 +368,7 @@ macro_rules! impl_random_array {
         }
     };
     // Empty case (no type parameters left)
-    {$n:expr,} => {
+    {$n:expr_2021,} => {
         impl<T: Random> Random for [T; $n] {
             fn random() -> Self {
                 []
@@ -522,7 +522,7 @@ impl<T> RandomSlice for Vec<T> {
 
 macro_rules! impl_random_slice {
     // Recursive, given at least one type parameter
-    ($n:expr, $t:ident, $($ts:ident,)*) => {
+    ($n:expr_2021, $t:ident, $($ts:ident,)*) => {
         impl_random_slice!(($n - 1), $($ts,)*);
 
         impl<T> RandomSlice for [T; $n] {
@@ -538,7 +538,7 @@ macro_rules! impl_random_slice {
         }
     };
     // Empty case (no type parameters left)
-    ($n:expr,) => {
+    ($n:expr_2021,) => {
         impl<T> RandomSlice for [T; $n] {
             type Item = T;
 
