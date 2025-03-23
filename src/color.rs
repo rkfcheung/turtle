@@ -1,10 +1,10 @@
 pub mod colors;
 
+use std::f64::EPSILON;
 use std::fmt::Debug;
 use std::iter::repeat;
-use std::f64::EPSILON;
 
-use serde::{Serialize, Deserialize};
+use serde::{Deserialize, Serialize};
 
 use crate::rand::{Random, RandomRange};
 
@@ -1169,8 +1169,7 @@ impl<'a> From<&'a str> for Color {
             };
 
             // Use closure here as 's' cannot be captured when using nested fn form
-            let extract_color_value = |v| i64::from_str_radix(v, 16)
-                .unwrap_or_else(|_| panic!("Invalid color literal: {}", s)) as f64;
+            let extract_color_value = |v| i64::from_str_radix(v, 16).unwrap_or_else(|_| panic!("Invalid color literal: {}", s)) as f64;
 
             let red = extract_color_value(&color_str[0..2]);
             let green = extract_color_value(&color_str[2..4]);
@@ -1178,8 +1177,7 @@ impl<'a> From<&'a str> for Color {
 
             Self::rgb(red, green, blue)
         } else {
-            colors::from_color_name(s)
-                .unwrap_or_else(|| panic!("Unknown color name: {}", s))
+            colors::from_color_name(s).unwrap_or_else(|| panic!("Unknown color name: {}", s))
         }
     }
 }
@@ -1238,14 +1236,14 @@ mod tests {
     #[should_panic(expected = "Invalid color literal: #fffff")]
     fn invalid_color1() {
         // Wrong number of digits
-        Color::from("#fffff");
+        let _ = Color::from("#fffff");
     }
 
     #[test]
     #[should_panic(expected = "Invalid color literal: #www")]
     fn invalid_color2() {
         // Invalid hex character
-        Color::from("#www");
+        let _ = Color::from("#www");
     }
 
     #[test]
@@ -1296,211 +1294,186 @@ mod tests {
 
     #[test]
     fn invalid_color3() {
-        assert!(
-            !Color {
-                red: NAN,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: NAN,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: NAN,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: NAN
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: NAN,
-                green: NAN,
-                blue: NAN,
-                alpha: NAN
-            }.is_valid()
-        );
+        assert!(!Color {
+            red: NAN,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: NAN,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: NAN,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: NAN
+        }
+        .is_valid());
+        assert!(!Color {
+            red: NAN,
+            green: NAN,
+            blue: NAN,
+            alpha: NAN
+        }
+        .is_valid());
 
-        assert!(
-            !Color {
-                red: INF,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: INF,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: INF,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: INF
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: INF,
-                green: INF,
-                blue: INF,
-                alpha: INF
-            }.is_valid()
-        );
+        assert!(!Color {
+            red: INF,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: INF,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: INF,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: INF
+        }
+        .is_valid());
+        assert!(!Color {
+            red: INF,
+            green: INF,
+            blue: INF,
+            alpha: INF
+        }
+        .is_valid());
 
-        assert!(
-            !Color {
-                red: -INF,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: -INF,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: -INF,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: -INF
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: -INF,
-                green: -INF,
-                blue: -INF,
-                alpha: -INF
-            }.is_valid()
-        );
+        assert!(!Color {
+            red: -INF,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: -INF,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: -INF,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: -INF
+        }
+        .is_valid());
+        assert!(!Color {
+            red: -INF,
+            green: -INF,
+            blue: -INF,
+            alpha: -INF
+        }
+        .is_valid());
 
         // Out of valid range
-        assert!(
-            !Color {
-                red: -EPSILON,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: -EPSILON,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: -EPSILON,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: -EPSILON
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: -EPSILON,
-                green: -EPSILON,
-                blue: -EPSILON,
-                alpha: -EPSILON
-            }.is_valid()
-        );
+        assert!(!Color {
+            red: -EPSILON,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: -EPSILON,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: -EPSILON,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: -EPSILON
+        }
+        .is_valid());
+        assert!(!Color {
+            red: -EPSILON,
+            green: -EPSILON,
+            blue: -EPSILON,
+            alpha: -EPSILON
+        }
+        .is_valid());
 
-        assert!(
-            !Color {
-                red: 255.0001,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 255.0001,
-                blue: 0.0,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 255.0001,
-                alpha: 0.0
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 0.0,
-                green: 0.0,
-                blue: 0.0,
-                alpha: 1.0001
-            }.is_valid()
-        );
-        assert!(
-            !Color {
-                red: 255.0001,
-                green: 255.0001,
-                blue: 255.0001,
-                alpha: 1.0001
-            }.is_valid()
-        );
+        assert!(!Color {
+            red: 255.0001,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 255.0001,
+            blue: 0.0,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 255.0001,
+            alpha: 0.0
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 0.0,
+            green: 0.0,
+            blue: 0.0,
+            alpha: 1.0001
+        }
+        .is_valid());
+        assert!(!Color {
+            red: 255.0001,
+            green: 255.0001,
+            blue: 255.0001,
+            alpha: 1.0001
+        }
+        .is_valid());
     }
 
     #[test]

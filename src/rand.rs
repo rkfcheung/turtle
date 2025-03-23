@@ -52,6 +52,8 @@
 //! implement [`RandomSlice`] so it can be used with the [`shuffle()`] and [`choose()`] functions.
 //!
 //! ```rust
+//! #![allow(dead_code)]
+//!
 //! use turtle::rand::RandomSlice;
 //!
 //! // This is a "newtype" wrapper around a Vec<T> which can be represented as a slice.
@@ -104,6 +106,8 @@ use std::num::Wrapping;
 /// [`random_range()`]: fn.random_range.html
 ///
 /// ```rust,no_run
+/// #![allow(dead_code)]
+///
 /// use turtle::rand::{
 ///     random,
 ///     Random,
@@ -187,6 +191,8 @@ pub trait Random {
 /// value (e.g. [`Speed`], [`Color`], `f64`, `u32`, etc.). For example, if you had the type:
 ///
 /// ```rust,no_run
+/// #![allow(dead_code)]
+///
 /// #[derive(Debug, Clone)]
 /// struct Product {
 ///     price: f64,
