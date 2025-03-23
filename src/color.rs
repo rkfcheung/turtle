@@ -21,7 +21,7 @@ const SAL_MAX_VAL: f64 = 1.0;
 const HUE_MAX_VAL: f64 = 360.0;
 
 macro_rules! assert_value_in_range {
-    ($name:expr, $value:expr, $min:expr, $max:expr) => {
+    ($name:expr_2021, $value:expr_2021, $min:expr_2021, $max:expr_2021) => {
         assert!(
             $value >= $min && $value <= $max,
             "{} is not a valid value for {}, values must be between {:.1} and {:.1}.",
@@ -34,7 +34,7 @@ macro_rules! assert_value_in_range {
 }
 
 macro_rules! assert_color_valid {
-    ($color:expr) => {
+    ($color:expr_2021) => {
         assert!(
             $color.is_valid(),
             "{:?} is not a valid Color. Please see color module documentation.",

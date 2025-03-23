@@ -26,7 +26,7 @@
 use crate::Color;
 
 macro_rules! color_consts {
-    ($($name:expr, $id:ident, ($r:expr, $g:expr, $b:expr, $a:expr);)*) => {
+    ($($name:expr_2021, $id:ident, ($r:expr_2021, $g:expr_2021, $b:expr_2021, $a:expr_2021);)*) => {
         /// A list of the values of all colors in the [`colors`](index.html)
         /// module
         ///
