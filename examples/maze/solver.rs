@@ -1,7 +1,7 @@
 use std::collections::{HashSet, VecDeque};
 
 use crate::maze::Maze;
-use turtle::{Turtle, rand::shuffle};
+use turtle::{rand::shuffle, Turtle};
 
 const SOLUTION_COLOR: &str = "#4CAF50";
 const BACKTRACK_COLOR: &str = "#F44336";
@@ -55,7 +55,8 @@ pub fn solve(turtle: &mut Turtle, maze: Maze, cell_width: f64, cell_height: f64)
 }
 
 fn unvisited_open_adjacents(maze: &Maze, visited: &HashSet<(usize, usize)>, position: (usize, usize)) -> Vec<(usize, usize)> {
-    maze.grid().adjacent_cells(position)
+    maze.grid()
+        .adjacent_cells(position)
         .into_iter()
         .filter(|p| maze.grid().is_open_between(position, *p))
         .filter(|p| !visited.contains(p))
