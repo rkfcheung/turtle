@@ -100,7 +100,7 @@ fn draw_text(turtle: &mut Turtle, text: &str) {
         // need to select the range beginning at `start`, running for
         // `byte_count`. Another style of writing this that you might see in
         // Rust libraries is `[start ..][.. length]`.
-        let row: &[u8] = &text.as_bytes()[start .. start + byte_count];
+        let row: &[u8] = &text.as_bytes()[start..start + byte_count];
 
         // For each byte (`u8`), we use `bitvec` to make a view into its bits.
         // `bitvec` provides the `.view_bits::<_>()` method on Rust integers for
@@ -203,16 +203,18 @@ fn draw_number(turtle: &mut Turtle, number: f32) {
 /// going to start on the correct side and be facing the correct way for this
 /// drawing to work.
 fn draw_row<O, T>(turtle: &mut Turtle, row: &BitSlice<O, T>)
-where O: BitOrder, T: BitStore {
+where
+    O: bitvec::store::BitStore,
+    T: bitvec::order::BitOrder,
+{
     // `&BitSlice` can iterate over bits. It is just like `&[bool]`, and so it
     // produces `&bool` for each loop.
-    for bit in row.iter().by_val() {
+    for bit in row.iter().by_vals() {
         // This checks if the bit produced by the row is `1` or `0`, and sets
         // the pen color to black (`1`) or light grey (`0`)
         if bit {
             turtle.set_pen_color("black");
-        }
-        else {
+        } else {
             turtle.set_pen_color("light grey");
         }
 
@@ -225,7 +227,7 @@ where O: BitOrder, T: BitStore {
         turtle.forward(BIT_MARGIN);
     }
     //  Rewind the turtle
-    for _ in 0 .. row.len() {
+    for _ in 0..row.len() {
         turtle.backward(BIT_BOX);
     }
 }

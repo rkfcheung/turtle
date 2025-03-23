@@ -1,6 +1,6 @@
 [package]
 name = "turtle"
-version = "1.0.0-rc.4"
+version = "1.0.0-dev.2503"
 authors = ["Sunjay Varma <varma.sunjay@gmail.com>"]
 description = "Learn the Rust language by creating animated drawings!"
 homepage = "http://turtle.rs"
@@ -76,7 +76,7 @@ features = [
 # Dependencies used when developing `turtle` directly, but not when using it as
 # a library.
 [dev-dependencies]
-bitvec = "0.22"
+bitvec = "1.0"
 chrono = "0.4"
 
 # Since the debug performance of turtle isn't all that great, we recommend that
