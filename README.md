@@ -1,5 +1,7 @@
 # turtle
 
+**Note:** This is a fork of the original [`turtle`](https://github.com/sunjay/turtle) repository. It appears the original repository is no longer actively maintained. I've forked it to ensure that my child can continue to learn and play with Logo in Rust. If the original repository becomes active again, I'm happy to re-apply any changes made here. **This fork is primarily for personal educational use and is not intended for publication on crates.io.**
+
 [![Crates.io](https://img.shields.io/crates/v/turtle.svg)](https://crates.io/crates/turtle)
 [![Docs.rs](https://docs.rs/turtle/badge.svg)](https://docs.rs/turtle)
 [![Crates.io](https://img.shields.io/crates/l/turtle.svg)](https://crates.io/crates/turtle)
@@ -9,7 +11,7 @@
 [![Zulip](https://img.shields.io/badge/chat-on%20zulip-success)](https://turtle.zulipchat.com)
 [![Tokei Line Count](https://tokei.rs/b1/github/sunjay/turtle?category=code)](https://github.com/sunjay/turtle)
 
-*Tweet your drawings to us on Twitter at [@RustTurtle](https://twitter.com/RustTurtle) and follow us to see what is being created!*
+_Tweet your drawings to us on Twitter at [@RustTurtle](https://twitter.com/RustTurtle) and follow us to see what is being created!_
 
 Create animated drawings with the [Rust programming language][rust]. This
 crate is a tool for teaching programming by drawing pictures. Learning this
@@ -23,8 +25,8 @@ any picture you want just by moving the turtle across the screen.
 
 ## Documentation
 
-* [Website](http://turtle.rs)
-* [API Documentation](https://docs.rs/turtle)
+- [Website](http://turtle.rs)
+- [API Documentation](https://docs.rs/turtle)
 
 ## Example
 
@@ -58,9 +60,9 @@ The following are some resources you can use to find help when you run into a
 problem. The links are listed in the order you should try each one, but feel
 free to come to the [Turtle Zulip] anytime if you are lost.
 
-* **Help with the Rust Language** - [Google], [Stack Overflow], [Rust Users Forum], [Turtle Zulip]
-* **Help with Turtle** - [Stack Overflow], [Turtle Zulip], [Google], [Rust Users Forum]
-* **Found a bug?** - [Open an issue][issues] (feel free to ask about your bug in the [Turtle Zulip] if you are not sure)
+- **Help with the Rust Language** - [Google], [Stack Overflow], [Rust Users Forum], [Turtle Zulip]
+- **Help with Turtle** - [Stack Overflow], [Turtle Zulip], [Google], [Rust Users Forum]
+- **Found a bug?** - [Open an issue][issues] (feel free to ask about your bug in the [Turtle Zulip] if you are not sure)
 
 [Google]: http://google.com/
 [Stack Overflow]: https://stackoverflow.com/
