@@ -50,10 +50,7 @@ fn main() {
     // Initial positioning.
     turtle.set_speed("instant");
     turtle.pen_up();
-    turtle.go_to([
-        -(size.width as f64) / 6.0,
-        -(size.height as f64) / 2.0 + BOTTOM_MARGIN,
-    ]);
+    turtle.go_to([-(size.width as f64) / 6.0, -(size.height as f64) / 2.0 + BOTTOM_MARGIN]);
     turtle.pen_down();
 
     // Setup.

@@ -54,11 +54,7 @@ impl Rotate for Point {
     /// 2D counterclockwise rotates the point by the given angle in radians.
     fn rot(&self, angle: Angle) -> Self {
         let (sin_angle, cos_angle) = angle.sin_cos();
-        [
-            self.x * cos_angle - self.y * sin_angle,
-            self.x * sin_angle + self.y * cos_angle,
-        ]
-        .into()
+        [self.x * cos_angle - self.y * sin_angle, self.x * sin_angle + self.y * cos_angle].into()
     }
 }
 
@@ -119,15 +115,7 @@ impl CubicBezier for Turtle {
     // again by adding the current position to it.
     fn bezier_rel_pr(&mut self, samples: usize, rel_points: [Point; 3]) {
         let pos = self.position();
-        self.bezier_abs_pr(
-            samples,
-            [
-                pos,
-                pos + rel_points[0],
-                pos + rel_points[1],
-                pos + rel_points[2],
-            ],
-        )
+        self.bezier_abs_pr(samples, [pos, pos + rel_points[0], pos + rel_points[1], pos + rel_points[2]])
     }
 
     // Does the same but also rotates the points so the first is aligned with
@@ -157,10 +145,7 @@ const PUPIL_COLOR: &str = "#ffffff";
 const MOUTH_AND_IRISES_COLOR: &str = "#000000";
 /// The original width and height of the image. Used to adapt the drawing to the
 /// used window size.
-const ORIGINAL_SIZE: Size = Size {
-    width: 1200,
-    height: 800,
-};
+const ORIGINAL_SIZE: Size = Size { width: 1200, height: 800 };
 
 /// Adapts the given `point` to the window's `size` with respect to the original
 /// drawing size by distorting the 2D space. I therefore does not preserve aspect
@@ -239,8 +224,7 @@ fn main() {
     let rp = rel_points;
     let ap = |point| adapt_point(point, size);
     let ad = |distance, angle| adapt_distance(distance, angle, size);
-    let ahf =
-        |turtle: &mut Turtle, distance, head| adapted_head_forward(turtle, distance, head, size);
+    let ahf = |turtle: &mut Turtle, distance, head| adapted_head_forward(turtle, distance, head, size);
 
     // Go to the starting point.
     turtle.set_fill_color(BACK_SHELL_COLOR);
@@ -367,12 +351,7 @@ fn main() {
     // Although `adapt_point` is used here, the fact that the points are rotated
     // incorrectly afterwards considering the aspect ratio renders this part not
     // easily scalable.
-    let spike_top_curve = rp([
-        ap([509.52, 106.52]),
-        ap([512.17, 99.17]),
-        ap([524.30, 96.83]),
-        ap([529.52, 102.48]),
-    ]);
+    let spike_top_curve = rp([ap([509.52, 106.52]), ap([512.17, 99.17]), ap([524.30, 96.83]), ap([529.52, 102.48])]);
     let spike_end_turn = 58.28f64.to_radians();
     let spike_end_length = 47.49;
     let spike_between_length = 12.0;

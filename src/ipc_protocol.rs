@@ -10,12 +10,12 @@ mod protocol;
 pub use messages::*;
 pub use protocol::*;
 
-use std::io;
 use std::future::Future;
+use std::io;
 
+use ipc_channel::ipc::{self, IpcError, IpcOneShotServer, IpcSender};
+use serde::{Deserialize, Serialize};
 use thiserror::Error;
-use serde::{Serialize, Deserialize};
-use ipc_channel::ipc::{self, IpcOneShotServer, IpcSender, IpcError};
 
 use crate::renderer_client::ClientId;
 
@@ -75,27 +75,26 @@ impl ClientReceiver {
 
 /// Establishes the client side of the IPC connection by providing a oneshot server name and
 /// completing the handshake
-pub async fn connect_client<S, F>(
-    send_ipc_oneshot_name: S,
-) -> Result<(ClientSender, ClientReceiver), ConnectionError>
-    where S: FnOnce(String) -> F,
-          F: Future<Output=io::Result<()>>,
+pub async fn connect_client<S, F>(send_ipc_oneshot_name: S) -> Result<(ClientSender, ClientReceiver), ConnectionError>
+where
+    S: FnOnce(String) -> F,
+    F: Future<Output = io::Result<()>>,
 {
     // Send the oneshot token to the server which will then respond with its own oneshot token
     let (server, server_name) = IpcOneShotServer::new()?;
     send_ipc_oneshot_name(server_name).await?;
 
-    let (receiver, response): (_, HandshakeResponse) = tokio::task::spawn_blocking(|| {
-        server.accept()
-    }).await??;
+    let (receiver, response): (_, HandshakeResponse) = tokio::task::spawn_blocking(|| server.accept()).await??;
 
     let sender = match response {
         HandshakeResponse::HandshakeFinish(sender) => sender,
         _ => unreachable!("bug: server did not send back Sender at the end of handshake"),
     };
 
-    let sender = ClientSender {sender};
-    let receiver = ClientReceiver {receiver: AsyncIpcReceiver::new(receiver)};
+    let sender = ClientSender { sender };
+    let receiver = ClientReceiver {
+        receiver: AsyncIpcReceiver::new(receiver),
+    };
 
     Ok((sender, receiver))
 }
@@ -109,7 +108,7 @@ pub struct ServerOneshotSender<'a> {
 
 impl<'a> ServerOneshotSender<'a> {
     pub fn new(client_id: ClientId, sender: &'a ServerSender) -> Self {
-        Self {client_id, sender}
+        Self { client_id, sender }
     }
 
     /// Returns the ID that this sender would send to
@@ -155,17 +154,17 @@ impl ServerReceiver {
 }
 
 /// Establishes a connection with the IPC channel oneshot server with the given name
-pub fn connect_server(
-    oneshot_name: String,
-) -> Result<(ServerSender, ServerReceiver), ConnectionError> {
+pub fn connect_server(oneshot_name: String) -> Result<(ServerSender, ServerReceiver), ConnectionError> {
     let (server_sender, receiver) = ipc::channel()?;
     let sender = IpcSender::connect(oneshot_name)?;
 
     // Finish handshake by giving client a sender it can use to send messages to the server
     sender.send(HandshakeResponse::HandshakeFinish(server_sender))?;
 
-    let sender = ServerSender {sender};
-    let receiver = ServerReceiver {receiver: AsyncIpcReceiver::new(receiver)};
+    let sender = ServerSender { sender };
+    let receiver = ServerReceiver {
+        receiver: AsyncIpcReceiver::new(receiver),
+    };
 
     Ok((sender, receiver))
 }

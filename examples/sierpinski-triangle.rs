@@ -88,14 +88,10 @@ fn sierpinski_triangle(turtle: &mut Turtle, level: u8, size: Distance) {
 /// centered and occupies as much drawing space as possible while staying in bounds.
 fn sierpinski_triangle_auto(turtle: &mut Turtle, level: u8, canvas_size: Size) {
     // The maximum size the triangle can take without going over the margin.
-    let auto_size = (canvas_size.width as f64).min(canvas_size.height as f64 * 2.0 / 3f64.sqrt())
-        - 2.0 * BORDER_MARGIN;
+    let auto_size = (canvas_size.width as f64).min(canvas_size.height as f64 * 2.0 / 3f64.sqrt()) - 2.0 * BORDER_MARGIN;
 
     turtle.pen_up();
-    turn_and_go_to(
-        turtle,
-        [-auto_size / 2.0, -auto_size / 4.0 * 3f64.sqrt()].into(),
-    );
+    turn_and_go_to(turtle, [-auto_size / 2.0, -auto_size / 4.0 * 3f64.sqrt()].into());
     turtle.set_heading(0.0); // 0 = East.
 
     // The drawing itself.
