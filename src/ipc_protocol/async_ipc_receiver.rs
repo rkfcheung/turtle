@@ -2,7 +2,6 @@ use std::thread;
 
 use ipc_channel::ipc::{IpcError, IpcReceiver};
 use serde::{de::DeserializeOwned, Serialize};
-use tokio::runtime::Handle;
 use tokio::sync::{mpsc, oneshot};
 
 /// Asynchronous wrapper over `IpcReceiver` that yields `Result<T, IpcError>`.
@@ -23,14 +22,13 @@ impl<T: Serialize + DeserializeOwned + Send + 'static> AsyncIpcReceiver<T> {
     pub fn new(ipc_receiver: IpcReceiver<T>) -> Self {
         let (channel_sender, mut receiver) = mpsc::unbounded_channel();
 
-        let handle = Handle::current();
         thread::spawn(move || {
             loop {
                 // This loop continues even if this call produces an error saying that IPC was
                 // disconnected. This allows callers of `recv` to detect the disconnection.
                 let next_value = ipc_receiver.recv();
 
-                let value_sender: oneshot::Sender<_> = match handle.block_on(receiver.recv()) {
+                let value_sender: oneshot::Sender<_> = match receiver.blocking_recv() {
                     Some(value_sender) => value_sender,
                     // The sender for this channel only drops when the main thread has stopped,
                     // so it's pretty safe to stop here

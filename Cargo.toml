@@ -51,26 +51,14 @@ cfg-if = "1.0"
 
 parking_lot = "0.11"
 
+tokio = { version = "1.44", features = ["process", "io-std", "io-util", "rt-multi-thread", "sync", "time", "macros"] }
+tokio-stream = { version = "0.1.17", features = ["sync"] }
+
 [dependencies.futures-util]
 version = "0.3"
 default-features = false
 features = [
   "channel",
-]
-
-[dependencies.tokio]
-version = "0.2"
-default-features = false
-features = [
-  "process",
-  "io-std",
-  "io-util",
-  "rt-threaded",
-  "blocking",
-  "sync",
-  "stream",
-  "time",
-  "macros",
 ]
 
 # Dependencies used when developing `turtle` directly, but not when using it as

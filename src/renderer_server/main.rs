@@ -85,7 +85,7 @@ pub fn run_main(
     let mut establish_connection = Some(establish_connection);
     // Using a bounded (size = 1) channel because a oneshot consumes self when awaited and this
     // needs to be polled multiple times
-    let (mut server_shutdown, server_shutdown_receiver) = mpsc::channel(1);
+    let (server_shutdown, server_shutdown_receiver) = mpsc::channel(1);
     let mut server_shutdown_receiver = Some(server_shutdown_receiver);
 
     let window_builder = {
@@ -274,7 +274,7 @@ pub fn run_main(
         GlutinEvent::LoopDestroyed => {
             // Notify the server that it should shutdown, ignoring the error if the channel has
             // been dropped since that just means that the server task has ended already
-            handle.block_on(server_shutdown.send(())).unwrap_or(());
+            server_shutdown.blocking_send(()).unwrap_or(());
         }
 
         _ => {}
