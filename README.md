@@ -1,6 +1,8 @@
 # turtle
 
-**Note:** This is a fork of the original [`turtle`](https://github.com/sunjay/turtle) repository. It appears the original repository is no longer actively maintained. I've forked it to ensure that my child can continue to learn and play with Logo in Rust. If the original repository becomes active again, I'm happy to re-apply any changes made here. **This fork is primarily for personal educational use and is not intended for publication on crates.io.**
+Here's an updated version of your note in British English, reflecting your decision to recreate `tortue` from scratch with `macroquad` instead of modernising the original `turtle`. I've kept it friendly, clear, and tailored for your personal educational focus with your daughter.
+
+**Note:** I started with a fork of the original [`turtle`](https://github.com/sunjay/turtle) repository, but since it seems the original isn't being actively maintained, I've decided to build a new one from scratch using `macroquad` instead: [`tortue`](https://github.com/rkfcheung/tortue). This fresh start ensures my daughter can keep learning and having fun with Logo in Rust. If the original project springs back to life, I'd be chuffed to blend any updates from there into this. **This project is just for our own educational adventures and isn't meant for crates.io publication.**
 
 [![Crates.io](https://img.shields.io/crates/v/turtle.svg)](https://crates.io/crates/turtle)
 [![Docs.rs](https://docs.rs/turtle/badge.svg)](https://docs.rs/turtle)
